@@ -14,16 +14,27 @@ class HomePageScreen extends StatefulWidget {
 
 class _HomePageScreenState
     extends State<HomePageScreen> {
-  final myBox = Hive.openBox('MyTaskBox');
+  @override
+  void initState() {
+    if (myBox.get(("ToDoList"))== null) {
+      db.createinitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
+  final myBox = Hive.box('MyTaskBox');
   final controller = TextEditingController();
   ToDOdataBase db = ToDOdataBase();
-
   // List<List<dynamic>> todoList = [];
 
   checkBoxChanger(int index) {
     setState(() {
-      db.todoList[index][1] = !db.todoList[index][1];
+      db.todoList[index][1] =
+          !db.todoList[index][1];
     });
+    db.ubdatedataBase();
   }
 
   addnewTask() {
@@ -47,12 +58,14 @@ class _HomePageScreenState
     });
     controller.clear();
     Navigator.pop(context);
+    db.ubdatedataBase();
   }
 
   deleteTask(index) {
     setState(() {
       db.todoList.removeAt(index);
     });
+    db.ubdatedataBase();
   }
 
   @override
@@ -74,7 +87,8 @@ class _HomePageScreenState
           itemBuilder: (context, index) {
             return TodoTile(
               taskName: db.todoList[index][0],
-              checkBoxValue: db.todoList[index][1],
+              checkBoxValue:
+                  db.todoList[index][1],
               onChanged: (value) {
                 checkBoxChanger(index);
               },

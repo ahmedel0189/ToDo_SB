@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todo_sb/layers/ui/screens/home_page_scr.dart';
 
@@ -31,9 +30,10 @@ class SandBoxToDo extends StatelessWidget {
 }
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   // init hive
   await Hive.initFlutter();
   // open the box
-  var box = await Hive.openBox('MyTaskBox');
+  await Hive.openBox('MyTaskBox');
   runApp(const SandBoxToDo());
 }
