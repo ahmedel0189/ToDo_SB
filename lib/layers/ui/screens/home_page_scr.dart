@@ -27,7 +27,6 @@ class _HomePageScreenState
   final myBox = Hive.box('MyTaskBox');
   final controller = TextEditingController();
   ToDOdataBase db = ToDOdataBase();
-  // List<List<dynamic>> todoList = [];
 
   checkBoxChanger(int index) {
     setState(() {
