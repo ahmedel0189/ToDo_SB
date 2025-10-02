@@ -3,7 +3,7 @@ default_platform(:android)
 
 platform :android do
   desc "Distribute production build to Firebase"
-  lane :release_app do
+  lane :release_to_firebase do
     sh "flutter clean"
     sh "flutter build apk --release --flavor production --target lib/main_production.dart --no-tree-shake-icons"
 
