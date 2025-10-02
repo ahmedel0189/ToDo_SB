@@ -31,8 +31,19 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.3"
-          bundler-cache: true
+          bundler-cache: false   # نخلي الكاش false علشان نتحكم في bundler
           working-directory: android
+
+      - name: Add Linux platform to Gemfile.lock
+        working-directory: android
+        run: |
+          bundle lock --add-platform x86_64-linux || true
+          bundle lock --add-platform x64-mingw-ucrt || true
+          bundle lock --add-platform x86_64-darwin-21 || true
+
+      - name: Install dependencies (bundle install)
+        working-directory: android
+        run: bundle install --jobs 4
 
       - name: Build and Distribute App to Firebase
         env:
